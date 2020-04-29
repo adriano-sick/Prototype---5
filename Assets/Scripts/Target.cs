@@ -62,8 +62,16 @@ public class Target : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        gameManager.UpdateLives(loseLiveValue);
-        Destroy(gameObject);
+        if(pointValue > 0)
+        {
+            gameManager.UpdateLives(loseLiveValue);
+            Destroy(gameObject);
+        }
+        else if(pointValue < 0)
+        {
+            Destroy(gameObject);
+        }
+        
     }
 
     float RandomTorque()
