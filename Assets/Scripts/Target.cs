@@ -51,8 +51,7 @@ public class Target : MonoBehaviour
     private void OnMouseDown()
     {
         gameManager.UpdateScore(pointValue);
-        targetAudio.PlayOneShot(clickSound, SFXVol);
-        
+        targetAudio.PlayOneShot(clickSound, SFXVol);        
         Destroy(gameObject, destroyDelay);
     }
 
@@ -75,11 +74,9 @@ public class Target : MonoBehaviour
     }
 
     Vector3 RandomSpawnPos()
-    {
-        
+    {       
 
         float randomXPos = Random.Range(-xRange, xRange);
-
         return new Vector3(randomXPos, ySpawnPos);
     }
 
