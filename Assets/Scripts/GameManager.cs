@@ -14,7 +14,9 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI livesText;
     public int lives = 10;
 
-  
+    
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +30,11 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        spawnRate = Random.Range(0, 3);       
+        spawnRate = Random.Range(0, 3);
+
+        //test1
+        //currentXPos = 
+        //end test1
 
     }
 
@@ -38,6 +44,7 @@ public class GameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(spawnRate);
             int index = Random.Range(0, targets.Count);
+                        
             Instantiate(targets[index]);
             
 

@@ -3,3 +3,21 @@
 ################################################################################
 
 /Assembly-CSharp.csproj
+/Temp
+/Prototype - 4.sln
+/.vs/Prototype - 4/v16
+/ProjectSettings
+/Packages
+/obj/Debug
+/Logs
+/Library
+/Assets/Course Library
+/Assets/Prefabs
+/Assets/Scenes
+/Assets/TextMesh Pro
+/Assets/Course Library.meta
+/Assets/TextMesh Pro.meta
+/Assets/Scripts.meta
+/Assets/Scenes.meta
+/Assets/Prefabs.meta
+*.meta

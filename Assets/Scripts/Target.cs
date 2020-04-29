@@ -23,7 +23,9 @@ public class Target : MonoBehaviour
     public AudioClip clickSound;
     private float destroyDelay = 0.1f;
     public float SFXVol = 1f;
-    
+
+    public ParticleSystem[] explosionParticles;
+    public int indexParticles;
 
 
     // Start is called before the first frame update
@@ -38,6 +40,7 @@ public class Target : MonoBehaviour
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
 
         targetAudio = GetComponent<AudioSource>();
+        indexParticles = Random.Range(0, explosionParticles.Length);
 
 
     }
@@ -51,7 +54,9 @@ public class Target : MonoBehaviour
     private void OnMouseDown()
     {
         gameManager.UpdateScore(pointValue);
-        targetAudio.PlayOneShot(clickSound, SFXVol);        
+        targetAudio.PlayOneShot(clickSound, SFXVol);
+
+        Instantiate(explosionParticles[indexParticles], transform.position, transform.rotation);
         Destroy(gameObject, destroyDelay);
     }
 
