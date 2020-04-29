@@ -9,7 +9,7 @@ public class Target : MonoBehaviour
 
     public float xRange = 4f;
     public float ySpawnPos = -6f;
-        
+
     public float maxTorque = 10f;
 
     private Rigidbody targetRb;
@@ -48,7 +48,7 @@ public class Target : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void OnMouseDown()
@@ -62,7 +62,7 @@ public class Target : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        gameManager.UpdateLives(loseLiveValue);        
+        gameManager.UpdateLives(loseLiveValue);
         Destroy(gameObject);
     }
 
@@ -79,13 +79,13 @@ public class Target : MonoBehaviour
     }
 
     Vector3 RandomSpawnPos()
-    {       
+    {
 
         float randomXPos = Random.Range(-xRange, xRange);
         return new Vector3(randomXPos, ySpawnPos);
     }
 
-    
+
 
 
 }

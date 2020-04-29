@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI livesText;
     public int lives = 10;
 
-    
+
 
 
     // Start is called before the first frame update
@@ -31,11 +31,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         spawnRate = Random.Range(0, 3);
-
-        //test1
-        //currentXPos = 
-        //end test1
-
+                
     }
 
     IEnumerator SpawnTarget()
@@ -44,9 +40,9 @@ public class GameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(spawnRate);
             int index = Random.Range(0, targets.Count);
-                        
+
             Instantiate(targets[index]);
-            
+
 
         }
     }
@@ -55,13 +51,13 @@ public class GameManager : MonoBehaviour
     {
         //to score goes to new score count one by one insted just change the value, I make this coroutine
         StartCoroutine(scoreStep(scoreToAdd));
-        
+
     }
 
     IEnumerator scoreStep(int scoreToAdd)
     {
         //if scoreToAdd is a positive number, this for loop will run "scoreToAdd" turns
-        for(int i = 0; i < scoreToAdd; i++)
+        for (int i = 0; i < scoreToAdd; i++)
         {
             score += 1;
             scoreText.text = "Score: " + score;
@@ -79,7 +75,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void UpdateLives(int scoreToAdd)
-    {        
+    {
         lives += scoreToAdd;
         livesText.text = "Lives: " + lives;
     }
