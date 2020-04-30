@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,31 +14,43 @@ public class GameManager : MonoBehaviour
     public int score = 0;
 
     public TextMeshProUGUI livesText;
+    public TextMeshProUGUI gameOverText;
     public int lives = 10;
 
-
+    public bool isGameActive;
+    public Button restartButton;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        isGameActive = true;
+
         StartCoroutine(SpawnTarget());
         UpdateScore(0);
 
         livesText.text = "Lives: " + lives;
         scoreText.text = "Score: " + score;
+
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         spawnRate = Random.Range(0, 3);
+
+        if(lives < 1)
+        {
+            //this one calls game over function and it ends the game!
+            GameOver();
+        }
                 
     }
 
     IEnumerator SpawnTarget()
     {
-        while (true)
+        while (isGameActive)
         {
             yield return new WaitForSeconds(spawnRate);
             int index = Random.Range(0, targets.Count);
@@ -76,8 +90,31 @@ public class GameManager : MonoBehaviour
 
     public void UpdateLives(int scoreToAdd)
     {
-        lives += scoreToAdd;
-        livesText.text = "Lives: " + lives;
+        if (isGameActive)
+        {
+            lives += scoreToAdd;
+            livesText.text = "Lives: " + lives;
+        }
+        if (!isGameActive)
+        {
+            lives = 0;
+        }
+
+    }
+
+    public void GameOver()
+    {
+        gameOverText.gameObject.SetActive(true);
+
+        isGameActive = false;
+
+        restartButton.gameObject.SetActive(true);
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
     }
 
 }

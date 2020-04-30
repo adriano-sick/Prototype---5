@@ -8,9 +8,9 @@ public class Target : MonoBehaviour
     public float maxSpeed = 16f;
 
     public float xRange = 4f;
-    public float ySpawnPos = -6f;
+    public float ySpawnPos = -1f;
 
-    public float maxTorque = 10f;
+    public float maxTorque = 8f;
 
     private Rigidbody targetRb;
 
@@ -53,21 +53,42 @@ public class Target : MonoBehaviour
 
     private void OnMouseDown()
     {
-        gameManager.UpdateScore(pointValue);
-        targetAudio.PlayOneShot(clickSound, SFXVol);
+        if (gameManager.isGameActive)
+        {
+            if (!gameObject.CompareTag("Bad"))
+            {
+                gameManager.UpdateScore(pointValue);
+                targetAudio.PlayOneShot(clickSound, SFXVol);
 
-        Instantiate(explosionParticles[indexParticles], transform.position, transform.rotation);
-        Destroy(gameObject, destroyDelay);
+                Instantiate(explosionParticles[indexParticles], transform.position, transform.rotation);
+                Destroy(gameObject, destroyDelay);
+
+            }
+
+            if (gameObject.CompareTag("Bad"))
+            {
+                gameManager.UpdateLives(loseLiveValue);
+                targetAudio.PlayOneShot(clickSound, SFXVol);
+
+                Instantiate(explosionParticles[indexParticles], transform.position, transform.rotation);
+                Destroy(gameObject, destroyDelay);
+            }
+
+
+
+        }
+
+        
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(pointValue > 0)
+        if(!gameObject.CompareTag("Bad"))
         {
-            gameManager.UpdateLives(loseLiveValue);
+            gameManager.UpdateLives(loseLiveValue);            
             Destroy(gameObject);
         }
-        else if(pointValue < 0)
+        else if(gameObject.CompareTag("Bad"))
         {
             Destroy(gameObject);
         }
@@ -93,7 +114,7 @@ public class Target : MonoBehaviour
         return new Vector3(randomXPos, ySpawnPos);
     }
 
-
+    
 
 
 }
