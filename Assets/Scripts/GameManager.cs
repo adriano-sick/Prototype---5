@@ -20,10 +20,10 @@ public class GameManager : MonoBehaviour
     public bool isGameActive;
     public Button restartButton;
 
-    //test1
+    
     private static int highscore;
     public TextMeshProUGUI highscoreText;
-    //end1
+    
 
 
     // Start is called before the first frame update
