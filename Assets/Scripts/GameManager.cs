@@ -23,16 +23,18 @@ public class GameManager : MonoBehaviour
     
     private static int highscore;
     public TextMeshProUGUI highscoreText;
+
+    public TextMeshProUGUI startText;
     
 
 
     // Start is called before the first frame update
     void Start()
     {
-        isGameActive = true;
-        
 
-        StartCoroutine(SpawnTarget());
+
+        StartCoroutine(StartCountdown());
+        
         UpdateScore(0);
 
         livesText.text = "Lives: " + lives;
@@ -131,4 +133,21 @@ public class GameManager : MonoBehaviour
 
     }
 
+    IEnumerator StartCountdown()
+    {
+        startText.gameObject.SetActive(true);
+        startText.text = "Ready!";
+        yield return new WaitForSeconds(1);
+        startText.text = "3";
+        yield return new WaitForSeconds(1);
+        startText.text = "2";
+        yield return new WaitForSeconds(1);
+        startText.text = "1";
+        yield return new WaitForSeconds(1);
+        startText.text = "Go!";
+        yield return new WaitForSeconds(1);
+        startText.gameObject.SetActive(false);
+        isGameActive = true;
+        StartCoroutine(SpawnTarget());
+    }
 }
