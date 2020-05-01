@@ -21,8 +21,9 @@ public class Target : MonoBehaviour
 
     private AudioSource targetAudio;
     public AudioClip clickSound;
+    public static float SFXVol = 1f;
+
     private float destroyDelay = 0.1f;
-    public float SFXVol = 1f;
 
     public ParticleSystem[] explosionParticles;
     public int indexParticles;

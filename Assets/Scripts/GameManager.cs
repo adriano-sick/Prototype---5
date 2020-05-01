@@ -20,24 +20,29 @@ public class GameManager : MonoBehaviour
 
     public bool isGameActive;
     public Button restartButton;
-
     
     private static int highscore;
     public TextMeshProUGUI highscoreText;
-
     public TextMeshProUGUI startText;
-
     public GameObject titleScreen;
+
+    private AudioSource bgAudio;
+    public AudioClip bgSound;
     
+    public static float bgSoundVol = 1.0f;
+
+
+
 
 
     // Start is called before the first frame update
     void Start()
-    {           
+    {
+        bgAudio = GetComponent<AudioSource>();
+        bgAudio.PlayOneShot(bgSound, bgSoundVol);
 
-        
     }
-
+       
     public void StartGame(int difficulty)
     {
         difficultyRate = difficulty;
@@ -60,7 +65,9 @@ public class GameManager : MonoBehaviour
         if (lives < 1)
         {            
             GameOver();
-        }                        
+        }
+
+        Debug.Log(bgSoundVol);
     }
 
     IEnumerator SpawnTarget()
@@ -122,7 +129,7 @@ public class GameManager : MonoBehaviour
     {
         if (score > highscore)
         {
-            highscore = score;          
+            highscore = score;       
             
         }
 
