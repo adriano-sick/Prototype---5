@@ -39,9 +39,8 @@ public class GameManager : MonoBehaviour
     {      
         difficultyRate = difficulty;
         titleScreen.gameObject.SetActive(false);
-
+        
         StartCoroutine(StartCountdown());
-
         UpdateScore(0);
 
         livesText.text = "Lives: " + lives;
@@ -144,6 +143,7 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Time.timeScale = 1;
     }       
     IEnumerator StartCountdown()
     {
