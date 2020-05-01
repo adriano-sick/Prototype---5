@@ -51,7 +51,7 @@ public class Target : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (gameManager.isGameActive)
+        if (gameManager.isGameActive && !gameManager.isGamePaused)
         {
             if (!gameObject.CompareTag("Bad"))
             {

@@ -6,37 +6,35 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
-{
-    public List<GameObject> targets;
-    private float spawnRate;
-    private int difficultyRate = 1;
-
-    public TextMeshProUGUI scoreText;
-    public int score = 0;
-
-    public TextMeshProUGUI livesText;
-    public TextMeshProUGUI gameOverText;
-    public int lives = 10;
-
-    public bool isGameActive;
-    public Button restartButton;
+{    
     
     private static int highscore;
-    public TextMeshProUGUI highscoreText;
-    public TextMeshProUGUI startText;
-    public GameObject titleScreen;
+    private int difficultyRate = 1;
+    private float spawnRate;
+    private AudioSource bgAudio;
 
-    private AudioSource bgAudio;    
+    public bool isGameActive = false;
+    public bool isGamePaused = false;
+    public int score = 0;
+    public int lives = 10;
+    public static float bgSoundVol = 1.0f;    
+    public TextMeshProUGUI startText;
+    public TextMeshProUGUI pauseText;
+    public TextMeshProUGUI gameOverText;
+    public TextMeshProUGUI livesText;
+    public TextMeshProUGUI scoreText;    
+    public TextMeshProUGUI highscoreText;
+    public Button restartButton;
     public Slider mainSlider;
-    public static float bgSoundVol = 1.0f;
+    public GameObject titleScreen;
+    public List<GameObject> targets;    
 
     // Start is called before the first frame update
     void Start()
     {
         bgAudio = GetComponent<AudioSource>();        
         mainSlider.value = bgSoundVol; 
-    }
-     
+    }     
     public void StartGame(int difficulty)
     {      
         difficultyRate = difficulty;
@@ -49,7 +47,6 @@ public class GameManager : MonoBehaviour
         livesText.text = "Lives: " + lives;
         scoreText.text = "Score: " + score;
     }
-
     // Update is called once per frame
     void Update()
     {        
@@ -59,8 +56,28 @@ public class GameManager : MonoBehaviour
         }
 
         bgSoundVol = bgAudio.volume;
-    }
 
+        if (Input.GetKeyDown(KeyCode.Return) && isGameActive)
+        {
+            if(Time.timeScale == 1)
+            {
+                Time.timeScale = 0;
+                bgAudio.Pause();
+                isGamePaused = true;
+                pauseText.gameObject.SetActive(true);
+                restartButton.gameObject.SetActive(true);
+            }
+            else if(Time.timeScale == 0)
+            {
+                Time.timeScale = 1;
+                bgAudio.Play();
+                isGamePaused = false;
+                pauseText.gameObject.SetActive(false);
+                restartButton.gameObject.SetActive(false);
+            }
+            
+        }
+    }
     IEnumerator SpawnTarget()
     {
         while (isGameActive)
@@ -72,14 +89,12 @@ public class GameManager : MonoBehaviour
             Instantiate(targets[index]);
         }
     }
-
     public void UpdateScore(int scoreToAdd)
     {
         //to score goes to new score count one by one insted just change the value, I make this coroutine
         StartCoroutine(scoreStep(scoreToAdd));
 
     }
-
     IEnumerator scoreStep(int scoreToAdd)
     {
         //if scoreToAdd is a positive number, this for loop will run "scoreToAdd" turns
@@ -99,7 +114,6 @@ public class GameManager : MonoBehaviour
         }
 
     }
-
     public void UpdateLives(int scoreToAdd)
     {
         if (isGameActive)
@@ -113,7 +127,6 @@ public class GameManager : MonoBehaviour
         }
 
     }
-
     public void GameOver()
     {
         if (score > highscore)
@@ -128,12 +141,10 @@ public class GameManager : MonoBehaviour
         isGameActive = false;
         restartButton.gameObject.SetActive(true);
     }
-
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-       
+    }       
     IEnumerator StartCountdown()
     {
         startText.gameObject.SetActive(true);
