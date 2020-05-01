@@ -28,7 +28,6 @@ public class Target : MonoBehaviour
     public ParticleSystem[] explosionParticles;
     public int indexParticles;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -42,8 +41,6 @@ public class Target : MonoBehaviour
 
         targetAudio = GetComponent<AudioSource>();
         indexParticles = Random.Range(0, explosionParticles.Length);
-
-
     }
 
     // Update is called once per frame
@@ -63,7 +60,6 @@ public class Target : MonoBehaviour
 
                 Instantiate(explosionParticles[indexParticles], transform.position, transform.rotation);
                 Destroy(gameObject, destroyDelay);
-
             }
 
             if (gameObject.CompareTag("Bad"))
@@ -74,12 +70,7 @@ public class Target : MonoBehaviour
                 Instantiate(explosionParticles[indexParticles], transform.position, transform.rotation);
                 Destroy(gameObject, destroyDelay);
             }
-
-
-
-        }
-
-        
+        }        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -92,8 +83,7 @@ public class Target : MonoBehaviour
         else if(gameObject.CompareTag("Bad"))
         {
             Destroy(gameObject);
-        }
-        
+        }        
     }
 
     float RandomTorque()
@@ -110,12 +100,7 @@ public class Target : MonoBehaviour
 
     Vector3 RandomSpawnPos()
     {
-
         float randomXPos = Random.Range(-xRange, xRange);
         return new Vector3(randomXPos, ySpawnPos);
     }
-
-    
-
-
 }

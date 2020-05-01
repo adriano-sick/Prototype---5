@@ -26,25 +26,19 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI startText;
     public GameObject titleScreen;
 
-    private AudioSource bgAudio;
-    public AudioClip bgSound;
-    
+    private AudioSource bgAudio;    
+    public Slider mainSlider;
     public static float bgSoundVol = 1.0f;
-
-
-
-
 
     // Start is called before the first frame update
     void Start()
     {
-        bgAudio = GetComponent<AudioSource>();
-        bgAudio.PlayOneShot(bgSound, bgSoundVol);
-
+        bgAudio = GetComponent<AudioSource>();        
+        mainSlider.value = bgSoundVol; 
     }
-       
+     
     public void StartGame(int difficulty)
-    {
+    {      
         difficultyRate = difficulty;
         titleScreen.gameObject.SetActive(false);
 
@@ -54,20 +48,17 @@ public class GameManager : MonoBehaviour
 
         livesText.text = "Lives: " + lives;
         scoreText.text = "Score: " + score;
-
     }
 
     // Update is called once per frame
     void Update()
-    {
-        //spawnRate = Random.Range(0, 3) / difficultyRate;
-
+    {        
         if (lives < 1)
         {            
             GameOver();
         }
 
-        Debug.Log(bgSoundVol);
+        bgSoundVol = bgAudio.volume;
     }
 
     IEnumerator SpawnTarget()
@@ -77,10 +68,8 @@ public class GameManager : MonoBehaviour
             spawnRate = Random.Range(0, 6) / difficultyRate;
             yield return new WaitForSeconds(spawnRate);
             int index = Random.Range(0, targets.Count);
-            Debug.Log(spawnRate);
+            
             Instantiate(targets[index]);
-
-
         }
     }
 
@@ -143,7 +132,6 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
     }
        
     IEnumerator StartCountdown()
