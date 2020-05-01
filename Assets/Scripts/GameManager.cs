@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 {
     public List<GameObject> targets;
     private float spawnRate;
+    private int difficultyRate = 1;
 
     public TextMeshProUGUI scoreText;
     public int score = 0;
@@ -25,46 +26,51 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI highscoreText;
 
     public TextMeshProUGUI startText;
+
+    public GameObject titleScreen;
     
 
 
     // Start is called before the first frame update
     void Start()
-    {
+    {           
 
+        
+    }
+
+    public void StartGame(int difficulty)
+    {
+        difficultyRate = difficulty;
+        titleScreen.gameObject.SetActive(false);
 
         StartCoroutine(StartCountdown());
-        
+
         UpdateScore(0);
 
         livesText.text = "Lives: " + lives;
         scoreText.text = "Score: " + score;
 
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        spawnRate = Random.Range(0, 3);
+        //spawnRate = Random.Range(0, 3) / difficultyRate;
 
-        if(lives < 1)
-        {
-            //this one calls game over function and it ends the game!
+        if (lives < 1)
+        {            
             GameOver();
-        }
-
-        Debug.Log(highscore);
-                
+        }                        
     }
 
     IEnumerator SpawnTarget()
     {
         while (isGameActive)
         {
+            spawnRate = Random.Range(0, 6) / difficultyRate;
             yield return new WaitForSeconds(spawnRate);
             int index = Random.Range(0, targets.Count);
-
+            Debug.Log(spawnRate);
             Instantiate(targets[index]);
 
 
@@ -132,7 +138,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
     }
-
+       
     IEnumerator StartCountdown()
     {
         startText.gameObject.SetActive(true);
