@@ -4,30 +4,22 @@ using UnityEngine;
 
 public class Target : MonoBehaviour
 {
+    private float destroyDelay = 0.1f;
+    private Rigidbody targetRb;
+    private GameManager gameManager;
+    private AudioSource targetAudio;
+
     public float minSpeed = 12f;
     public float maxSpeed = 16f;
-
     public float xRange = 4f;
     public float ySpawnPos = -1f;
-
     public float maxTorque = 8f;
-
-    private Rigidbody targetRb;
-
-    private GameManager gameManager;
-
+    public static float SFXVol = 1f;
     public int pointValue = 0;
     public int loseLiveValue = -1;
-
-    private AudioSource targetAudio;
-    public AudioClip clickSound;
-    public static float SFXVol = 1f;
-
-    private float destroyDelay = 0.1f;
-
-    public ParticleSystem[] explosionParticles;
     public int indexParticles;
-
+    public AudioClip clickSound;
+    public ParticleSystem[] explosionParticles;
     // Start is called before the first frame update
     void Start()
     {
